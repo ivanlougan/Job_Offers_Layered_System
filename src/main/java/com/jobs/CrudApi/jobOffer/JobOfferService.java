@@ -27,4 +27,14 @@ public class JobOfferService {
         JobOffer savedJobOffer = jobOfferRepository.save(jobOfferToSave);
         return jobOfferDtoMapper.map(savedJobOffer);
     }
+
+    void updateOffer(JobOfferDto jobOfferDto) {
+        // zamiana na encje
+        JobOffer jobOffer = jobOfferDtoMapper.map(jobOfferDto);
+        jobOfferRepository.save(jobOffer);
+    }
+
+    void deleteOffer (Long id) {
+        jobOfferRepository.deleteById(id);
+    }
 }
