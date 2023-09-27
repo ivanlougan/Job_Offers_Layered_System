@@ -1,7 +1,16 @@
-package com.jobs.CrudApi;
+package com.jobs.CrudApi.company;
 
-public class CompanyDto {
+import com.jobs.CrudApi.jobOffer.JobOffer;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Company {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
@@ -9,6 +18,8 @@ public class CompanyDto {
     private Integer employees;
     private String telephone;
     private String email;
+    @OneToMany(mappedBy = "company")
+    private List<JobOffer> jobOffers = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -64,5 +75,13 @@ public class CompanyDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<JobOffer> getJobOffers() {
+        return jobOffers;
+    }
+
+    public void setJobOffers(List<JobOffer> jobOffers) {
+        this.jobOffers = jobOffers;
     }
 }

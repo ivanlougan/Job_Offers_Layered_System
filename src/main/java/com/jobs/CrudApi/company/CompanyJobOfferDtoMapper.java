@@ -1,5 +1,6 @@
-package com.jobs.CrudApi;
+package com.jobs.CrudApi.company;
 
+import com.jobs.CrudApi.jobOffer.JobOffer;
 import org.springframework.stereotype.Service;
 
 @Service

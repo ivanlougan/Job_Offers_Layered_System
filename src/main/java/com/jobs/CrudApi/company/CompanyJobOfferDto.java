@@ -1,4 +1,4 @@
-package com.jobs.CrudApi;
+package com.jobs.CrudApi.company;
 
 public class CompanyJobOfferDto {
 

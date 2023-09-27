@@ -1,5 +1,6 @@
-package com.jobs.CrudApi;
+package com.jobs.CrudApi.jobOffer;
 
+import com.jobs.CrudApi.company.Company;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

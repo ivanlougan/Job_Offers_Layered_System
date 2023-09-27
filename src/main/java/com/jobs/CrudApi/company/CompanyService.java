@@ -1,7 +1,6 @@
-package com.jobs.CrudApi;
+package com.jobs.CrudApi.company;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,5 +33,25 @@ public class CompanyService {
                 .stream()
                 .map(companyJobOfferDtoMapper::map)
                 .toList();
+    }
+
+    // Metoda save() przyjmuje obiekt typu CompanyDto, który jest zamieniany na encję.
+    // Ta jest zapisywana w bazie, gdzie jest ustawiony jej identyfikator.
+    // Po zapisie zamieniamy obiekt encji z powrotem na CompanyDto i zwracamy w wyniku.
+    CompanyDto saveCompany (CompanyDto companyDto) {
+        Company company = companyDtoMapper.map(companyDto);
+        Company savedCompany = companyRepository.save(company);
+        return companyDtoMapper.map(savedCompany);
+    }
+
+
+    Optional<CompanyDto> replaceCompany (Long companyId, CompanyDto companyDto) {
+        if (!companyRepository.existsById(companyId)) {
+            return Optional.empty();
+        }
+        companyDto.setId(companyId);
+        Company companyToUpdate = companyDtoMapper.map(companyDto);
+        Company updatedEntity = companyRepository.save(companyToUpdate);
+        return Optional.of(companyDtoMapper.map(updatedEntity));
     }
 }

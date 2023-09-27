@@ -1,12 +1,10 @@
-package com.jobs.CrudApi;
+package com.jobs.CrudApi.company;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 // W kontrolerze wykorzystujemy klasę CompanyService do udostępnienia danych na temat firmy oraz jej ofert pracy.
@@ -37,5 +35,22 @@ public class CompanyController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(companyService.getJobOffersByCompanyId(id));
+    }
+
+    @PostMapping
+    ResponseEntity<CompanyDto> savedCompany(@RequestBody CompanyDto company) {
+        CompanyDto savedCompany = companyService.saveCompany(company);
+        URI savedCompanyUri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(savedCompany.getId())
+                .toUri();
+        return ResponseEntity.created(savedCompanyUri).body(savedCompany);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<?> replaceCompany(@PathVariable Long id, @RequestBody CompanyDto company) {
+        return companyService.replaceCompany(id, company)
+                .map( c -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
     }
 }
